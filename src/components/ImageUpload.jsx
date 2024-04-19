@@ -17,14 +17,13 @@ export default function ImageUpload() {
    const { formData, setFormData } = useContext(MyContext);
    const navigate = useNavigate();
    useEffect(() => {
-      if ((image && location) || (formData.avatar && formData.location)) {
+      if (formData.avatar || formData.location) {
          setFilled(true);
-         setFormData({ ...formData, avatar: image, location: location });
-         console.log(formData);
       } else {
          setFilled(false);
       }
-   }, [image, location, formData.avatar]);
+      console.log(formData);
+   }, [formData]);
    return (
       <div className='mt-8'>
          <h2 className=' font-bold text-2xl'>Add an avatar</h2>
@@ -35,20 +34,22 @@ export default function ImageUpload() {
                id='imageUplaod'
                className='hidden'
                onChange={(e) => {
-                  setImage(URL.createObjectURL(e.target.files[0]));
+                  setFormData((prev) => ({
+                     ...prev,
+                     avatar: URL.createObjectURL(e.target.files[0]),
+                  }));
                }}
             />
             <div
                className={` w-44 h-44 rounded-full border-4 ${
-                  !image ? "border-dashed" : "border-none"
+                  !formData.avatar ? "border-dashed" : "border-none"
                } flex items-center justify-center `}
                onClick={() => document.getElementById("imageUplaod").click()}>
-               {image === null ? (
+               {formData.avatar === null ? (
                   <BiSolidCameraPlus className='text-3xl text-slate-400' />
                ) : (
                   <img
-                     value={formData.avatar}
-                     src={image}
+                     src={formData.avatar}
                      alt='profile'
                      className='w-full h-full rounded-full'
                   />
@@ -82,7 +83,10 @@ export default function ImageUpload() {
                            alt=''
                            srcset=''
                            onClick={() => {
-                              setImage(avatar1);
+                              setFormData((prev) => ({
+                                 ...prev,
+                                 avatar: avatar1,
+                              }));
                            }}
                         />
                         <img
@@ -91,7 +95,10 @@ export default function ImageUpload() {
                            alt=''
                            srcset=''
                            onClick={() => {
-                              setImage(avatar2);
+                              setFormData((prev) => ({
+                                 ...prev,
+                                 avatar: avatar2,
+                              }));
                            }}
                         />
                         <img
@@ -100,7 +107,7 @@ export default function ImageUpload() {
                            alt=''
                            srcset=''
                            onClick={() => {
-                              setImage(avatar3);
+                              setFormData((prev) => ({ ...prev, avatar: 3 }));
                            }}
                         />
                         <img
@@ -109,7 +116,10 @@ export default function ImageUpload() {
                            alt=''
                            srcset=''
                            onClick={() => {
-                              setImage(avatar4);
+                              setFormData((prev) => ({
+                                 ...prev,
+                                 avatar: avatar4,
+                              }));
                            }}
                         />
                      </div>
@@ -121,7 +131,10 @@ export default function ImageUpload() {
             <h2 className=' font-bold text-2xl'>Add your location</h2>
             <input
                onChange={(e) => {
-                  setLocation(e.target.value);
+                  setFormData((prev) => ({
+                     ...prev,
+                     location: e.target.value,
+                  }));
                }}
                type='text'
                value={formData.location}

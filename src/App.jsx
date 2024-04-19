@@ -13,7 +13,7 @@ export default function App() {
       username: "",
       email: "",
       password: "",
-      avatar: "",
+      avatar: null,
       location: "",
       opt1: false,
       opt2: false,
