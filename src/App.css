@@ -1,0 +1,9 @@
+* {
+   font-family: "Roboto", sans-serif;
+}
+
+.my-icon {
+   --fa-primary-color: #ffffff;
+   --fa-secondary-color: #f23818;
+   --fa-secondary-opacity: 1;
+}
